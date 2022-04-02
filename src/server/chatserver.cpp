@@ -28,15 +28,15 @@ void ChatServer::start(){
 }
 
 //上报链接相关信息的回调函数
-void ChatServer::onConnection(const TcpConnectionPtr&){
+void ChatServer::onConnection(const TcpConnectionPtr& conn){
     //用户断开连接
     if (!conn->connected())
         conn->shutdown();
 }
 //上报读写事件相关信息的回调函数
-void ChatServer::onMessage(const TcpConnectionPtr&,
-                Buffer*,
-                Timestamp){
+void ChatServer::onMessage(const TcpConnectionPtr& conn,
+                Buffer* buffer,
+                Timestamp time){
     string buf = buffer->retrieveAllAsString();
     //数据的反序列化
     json js = json::parse(buf);
