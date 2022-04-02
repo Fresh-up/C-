@@ -1,7 +1,3 @@
-/home/fresh/ChatServer/build/CMakeFiles/edit_cache.dir
-/home/fresh/ChatServer/build/CMakeFiles/rebuild_cache.dir
-/home/fresh/ChatServer/build/src/CMakeFiles/edit_cache.dir
-/home/fresh/ChatServer/build/src/CMakeFiles/rebuild_cache.dir
-/home/fresh/ChatServer/build/src/server/CMakeFiles/ChatServer.dir
-/home/fresh/ChatServer/build/src/server/CMakeFiles/edit_cache.dir
-/home/fresh/ChatServer/build/src/server/CMakeFiles/rebuild_cache.dir
+D:/桌面/GitHub/ChatServer/build/CMakeFiles/ALL_BUILD.dir
+D:/桌面/GitHub/ChatServer/build/CMakeFiles/ZERO_CHECK.dir
+D:/桌面/GitHub/ChatServer/build/src/server/CMakeFiles/ChatServer.dir
