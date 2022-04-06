@@ -1,0 +1,7 @@
+/home/fresh/github/ChatServer/CMakeFiles/edit_cache.dir
+/home/fresh/github/ChatServer/CMakeFiles/rebuild_cache.dir
+/home/fresh/github/ChatServer/src/CMakeFiles/edit_cache.dir
+/home/fresh/github/ChatServer/src/CMakeFiles/rebuild_cache.dir
+/home/fresh/github/ChatServer/src/server/CMakeFiles/ChatServer.dir
+/home/fresh/github/ChatServer/src/server/CMakeFiles/edit_cache.dir
+/home/fresh/github/ChatServer/src/server/CMakeFiles/rebuild_cache.dir

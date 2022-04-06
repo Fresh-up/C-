@@ -1,7 +1,9 @@
 #include "chatservice.hpp"
 #include "public.hpp"
 #include <muduo/base/Logging.h>
+#include <vector>
 using namespace muduo;
+using namespace std;
 
 ChatService* ChatService::instance(){
     static ChatService service;

@@ -22,5 +22,5 @@ private:
                     Timestamp);
     TcpServer _server;
     EventLoop *_loop;
-}
+};
 #endif

@@ -1,0 +1,17 @@
+[
+{
+  "directory": "/home/fresh/ChatServer/build/src/server",
+  "command": "/usr/bin/g++  -I/home/fresh/ChatServer/include -I/home/fresh/ChatServer/include/server -I/home/fresh/ChatServer/thirdparty -g -std=c++11 -g -o CMakeFiles/ChatServer.dir/chatserver.cpp.o -c /home/fresh/ChatServer/src/server/chatserver.cpp",
+  "file": "/home/fresh/ChatServer/src/server/chatserver.cpp"
+},
+{
+  "directory": "/home/fresh/ChatServer/build/src/server",
+  "command": "/usr/bin/g++  -I/home/fresh/ChatServer/include -I/home/fresh/ChatServer/include/server -I/home/fresh/ChatServer/thirdparty -g -std=c++11 -g -o CMakeFiles/ChatServer.dir/chatservice.cpp.o -c /home/fresh/ChatServer/src/server/chatservice.cpp",
+  "file": "/home/fresh/ChatServer/src/server/chatservice.cpp"
+},
+{
+  "directory": "/home/fresh/ChatServer/build/src/server",
+  "command": "/usr/bin/g++  -I/home/fresh/ChatServer/include -I/home/fresh/ChatServer/include/server -I/home/fresh/ChatServer/thirdparty -g -std=c++11 -g -o CMakeFiles/ChatServer.dir/main.cpp.o -c /home/fresh/ChatServer/src/server/main.cpp",
+  "file": "/home/fresh/ChatServer/src/server/main.cpp"
+}
+]
