@@ -10,6 +10,7 @@ using namespace muduo;
 using namespace muduo::net;
 
 #include "usermodel.hpp"
+#include "groupmodel.hpp"
 #include "friendmodel.hpp"
 #include "offlinemessagemodel.hpp"
 #include "json.hpp"
@@ -52,6 +53,7 @@ private:
     UserModel _userModel;
     OfflineMsgModel _offlineMsgModel;
     FriendModel _friendModel;
+    GroupModel _groupModel;
 };
 
 #endif
