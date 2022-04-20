@@ -20,7 +20,7 @@ ChatService::ChatService(){
 //服务器异常退出，业务重置方法
 void ChatService::reset(){
     //把online状态的用户，设置为offline
-    userModel.resetState();
+    _userModel.resetState();
 }
 //获取消息对应的处理函数
 MsgHandler ChatService::getHandler(int msgid){
@@ -39,6 +39,7 @@ MsgHandler ChatService::getHandler(int msgid){
 
 // 处理登录业务
 void ChatService::login(const TcpConnectionPtr &conn, json &js, Timestamp time){
+    // LOG_INFO << "Login service has been done.";
     int id = js["id"].get<int>();
     string pwd = js["password"];
 
@@ -63,7 +64,7 @@ void ChatService::login(const TcpConnectionPtr &conn, json &js, Timestamp time){
             }
 
             // id用户登录成功后，向redis订阅channel(id)
-            _redis.subscribe(id); 
+            // _redis.subscribe(id); 
 
             // 登录成功，更新用户状态信息 state offline=>online
             user.setState("online");
@@ -82,19 +83,6 @@ void ChatService::login(const TcpConnectionPtr &conn, json &js, Timestamp time){
                 // 读取该用户的离线消息后，把该用户的所有离线消息删除掉
                 _offlineMsgModel.remove(id);
             }
-            // 查询该用户的好友信息，并返回
-            vector<User> userVec = _friendModel.query(id);
-            if (!userVec.empty()){
-                vector<string> vec2;
-                for (User &user : userVec){
-                    json js;
-                    js["id"] = user.getId();
-                    js["name"] = user.getName();
-                    js["state"] = user.getState();
-                    vec2.emplace_back(js.dump);
-                }
-                response["friends"] = vec2;
-            }
 
             // 查询该用户的好友信息并返回
             vector<User> userVec = _friendModel.query(id);
@@ -112,34 +100,7 @@ void ChatService::login(const TcpConnectionPtr &conn, json &js, Timestamp time){
                 response["friends"] = vec2;
             }
 
-            // 查询用户的群组信息
-            vector<Group> groupuserVec = _groupModel.queryGroups(id);
-            if (!groupuserVec.empty())
-            {
-                // group:[{groupid:[xxx, xxx, xxx, xxx]}]
-                vector<string> groupV;
-                for (Group &group : groupuserVec)
-                {
-                    json grpjson;
-                    grpjson["id"] = group.getId();
-                    grpjson["groupname"] = group.getName();
-                    grpjson["groupdesc"] = group.getDesc();
-                    vector<string> userV;
-                    for (GroupUser &user : group.getUsers())
-                    {
-                        json js;
-                        js["id"] = user.getId();
-                        js["name"] = user.getName();
-                        js["state"] = user.getState();
-                        js["role"] = user.getRole();
-                        userV.push_back(js.dump());
-                    }
-                    grpjson["users"] = userV;
-                    groupV.push_back(grpjson.dump());
-                }
-
-                response["groups"] = groupV;
-            }
+            
 
             conn->send(response.dump());
         }
@@ -156,6 +117,7 @@ void ChatService::login(const TcpConnectionPtr &conn, json &js, Timestamp time){
 }
 // 处理注册业务 name    password
 void ChatService::reg(const TcpConnectionPtr &conn, json &js, Timestamp time){
+    // LOG_INFO << "Registration service has been done.";
     string name = js["name"];
     string pwd = js["password"];
 
@@ -199,7 +161,7 @@ void ChatService::clientCloseException(const TcpConnectionPtr &conn)
     }
 
     // 用户注销，相当于就是下线，在redis中取消订阅通道
-    _redis.unsubscribe(user.getId()); 
+    // _redis.unsubscribe(user.getId()); 
 
     // 更新用户的状态信息
     if (user.getId() != -1)
@@ -211,7 +173,7 @@ void ChatService::clientCloseException(const TcpConnectionPtr &conn)
 
 // 一对一聊天业务
 void ChatService::oneChat(const TcpConnectionPtr &conn, json &js, Timestamp time){
-    int toid = js["toid"].get<int>();
+    int toid = js["to"].get<int>();
 
     {
         lock_guard<mutex> lock(_connMutex);
@@ -234,7 +196,7 @@ void ChatService::addFriend(const TcpConnectionPtr &conn, json &js, Timestamp ti
     int friendid = js["friendid"].get<int>();
 
     //存储好友信息
-    _friendModel.insert(userif, friendid);
+    _friendModel.insert(userid, friendid);
 }
 
 // 创建群组业务
