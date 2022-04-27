@@ -241,17 +241,9 @@ void ChatService::groupChat(const TcpConnectionPtr &conn, json &js, Timestamp ti
         }
         else
         {
-            // 查询toid是否在线 
-            User user = _userModel.query(id);
-            if (user.getState() == "online")
-            {
-                _redis.publish(id, js.dump());
-            }
-            else
-            {
-                // 存储离线群消息
-                _offlineMsgModel.insert(id, js.dump());
-            }
+            
+            // 存储离线群消息
+            _offlineMsgModel.insert(id, js.dump());
         }
     }
 }
