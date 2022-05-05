@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-// User表的ORM类 映射表的字段
+// User表的ORM类
 class User
 {
 public:

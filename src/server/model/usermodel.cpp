@@ -12,7 +12,7 @@ bool UserModel::insert(User &user)
             user.getName().c_str(), user.getPwd().c_str(), user.getState().c_str());
 
     MySQL mysql;
-    if (mysql.connect())    
+    if (mysql.connect())
     {
         if (mysql.update(sql))
         {
