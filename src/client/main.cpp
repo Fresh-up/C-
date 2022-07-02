@@ -370,8 +370,12 @@ void creategroup(int, string);
 void addgroup(int, string);
 // "groupchat" command handler
 void groupchat(int, string);
-// "loginout" command handler
-void loginout(int, string);
+// "logout" command handler
+void logout(int, string);
+// "showfriendlist" command handler
+void showfriendlist(int fd = 0, string str = "");
+// "showgrouplist" command handler
+void showgrouplist(int fd = 0, string str = "");
 
 // 系统支持的客户端命令列表
 unordered_map<string, string> commandMap = {
@@ -381,7 +385,9 @@ unordered_map<string, string> commandMap = {
     {"creategroup", "创建群组，格式creategroup:groupname:groupdesc"},
     {"addgroup", "加入群组，格式addgroup:groupid"},
     {"groupchat", "群聊，格式groupchat:groupid:message"},
-    {"loginout", "注销，格式loginout"}};
+    {"logout", "注销，格式logout"},
+    {"showfriendlist", "展示好友列表，格式showfriendlist"},
+    {"showgrouplist", "展示群组列表，格式showgrouplist"}};
 
 // 注册系统支持的客户端命令处理
 unordered_map<string, function<void(int, string)>> commandHandlerMap = {
@@ -391,7 +397,9 @@ unordered_map<string, function<void(int, string)>> commandHandlerMap = {
     {"creategroup", creategroup},
     {"addgroup", addgroup},
     {"groupchat", groupchat},
-    {"loginout", loginout}};
+    {"logout", logout},
+    {"showfriendlist", showfriendlist},
+    {"showgrouplist", showgrouplist}};
 
 // 主聊天页面程序
 void mainMenu(int clientfd)
@@ -549,8 +557,8 @@ void groupchat(int clientfd, string str)
         cerr << "send groupchat msg error -> " << buffer << endl;
     }
 }
-// "loginout" command handler
-void loginout(int clientfd, string)
+// "logout" command handler
+void logout(int clientfd, string)
 {
     json js;
     js["msgid"] = LOGINOUT_MSG;
@@ -560,7 +568,7 @@ void loginout(int clientfd, string)
     int len = send(clientfd, buffer.c_str(), strlen(buffer.c_str()) + 1, 0);
     if (-1 == len)
     {
-        cerr << "send loginout msg error -> " << buffer << endl;
+        cerr << "send logout msg error -> " << buffer << endl;
     }
     else
     {
@@ -578,4 +586,37 @@ string getCurrentTime()
             (int)ptm->tm_year + 1900, (int)ptm->tm_mon + 1, (int)ptm->tm_mday,
             (int)ptm->tm_hour, (int)ptm->tm_min, (int)ptm->tm_sec);
     return std::string(date);
+}
+
+// 显示好友列表
+void showfriendlist(int, string) 
+{
+    cout << "----------------------friend list---------------------" << endl;
+    if (!g_currentUserFriendList.empty())
+    {
+        for (User &user : g_currentUserFriendList)
+        {
+            cout << user.getId() << " " << user.getName() << " " << user.getState() << endl;
+        }
+    }
+    cout << "------------------------------------------------------" << endl;
+}
+
+// 显示群组列表
+void showgrouplist(int, string) 
+{
+    cout << "----------------------group list----------------------" << endl;
+    if (!g_currentUserGroupList.empty())
+    {
+        for (Group &group : g_currentUserGroupList)
+        {
+            cout << group.getId() << " " << group.getName() << " " << group.getDesc() << endl;
+            for (GroupUser &user : group.getUsers())
+            {
+                cout << user.getId() << " " << user.getName() << " " << user.getState()
+                     << " " << user.getRole() << endl;
+            }
+        }
+    }
+    cout << "------------------------------------------------------" << endl;
 }
