@@ -8,7 +8,13 @@
 
 为了实现负载均衡，需要安装nginx
 
-且需要手动配置MySQL，实现报告里面的所有表项
+且需要手动配置MySQL，创建数据库名chat，创建5张表: 
+
+*   allgroup
+*   friend
+*   groupuser
+*   offlinemessage
+*   user
 
 环境搭建好后便可以进入ChatServer文件夹，依次执行命令
 
@@ -20,9 +26,14 @@ make
 生成的可执行文件在bin目录
 
 ```powershell
-./ChatServer 127.0.0.1 6000 # 开启服务器
+./ChatServer 127.0.0.1 6000 # 开启服务器，端口不一定6000，可以自己设定
 ./ChatClient 127.0.0.1 6000 # 在另一终端开启客户端
 ```
+
+# 7.2添加功能
+
+1.   客户端显示群组列表命令
+2.   客户端显示好友列表命令
 
 # 4.27完成的功能
 
